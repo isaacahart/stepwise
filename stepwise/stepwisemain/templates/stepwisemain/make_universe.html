@@ -1,0 +1,62 @@
+{% extends 'stepwisemain/base.html' %}
+
+{% load django_vite %}
+
+{% block title %}Stepwise - Make a Universe{% endblock %}
+{% block styles %}
+    {% vite_hmr_client %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stepwisemain/css/make_universe.css' %}">
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h1>Make a Universe</h1>
+
+    {{ form.as_p }}
+
+    <p><input type="submit" value="Add Level" name="new-level"></p>
+    
+    {% if levels %}
+        <p>Levels in this Universe:</p>
+        <ul>
+        {% for level in levels %}
+            <li>{{ level.name }}
+            <button type="submit" value="{{ level.pk }}" name="edit-level">
+                Edit
+            </button>
+            <a href="{% url 'stepwisemain:deletelevel' form.instance.pk level.pk %}" class="delete button">
+                Delete
+            </a>
+            {% if level.theorem %}
+                <button type="submit" value="{{ level.pk }}" name="play-level" class="play">
+                    Play
+                </button>
+            {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no levels in this universe yet.</p>
+    {% endif %}
+
+    <canvas class="map" style="position: fixed; top:50px; left:500px"></canvas>
+    <input type="hidden" class="edit-mode">
+
+    <div class="nodes">
+        {% for level in levels %}
+            <input type="hidden"
+            value="{{ level.coord }}"
+            name="level{{ level.pk }}"
+            data-id="{{ level.pk }}"
+            data-name="{{ level.name }}"
+            data-color="{{ level.color }}">
+        {% endfor %}
+    </div>
+
+    {% vite_asset 'front-end/js/ui/world_map.js' %}
+    
+    <input type="submit" value="Save" name="save">
+</form>
+{% endblock %}

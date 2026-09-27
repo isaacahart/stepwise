@@ -1,0 +1,24 @@
+{% extends "stepwisemain/base_with_bar.html" %}
+
+{% block title %}Stepwise - Projects Played{% endblock %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'stepwisemain/css/project_list.css' %}">
+{% endblock %}
+
+{% block inner_content %}
+{% block header %}
+{% endblock %}
+{% for gms in object_list %}
+    <fieldset>
+        <h2>{{ gms.universe.name }}</h2>
+        <p>{{ gms.universe.description }}</p>
+        <p>Completed {{ gms.levels_complete|length }}/{{ gms.universe.level_set.all|length }} levels</p>
+        <a class="button" href="{% url 'stepwisemain:newgame' gms.universe.pk %}">New Game</a>
+        {% if user == gms.user %}
+            <a class="button" href="{% url 'stepwisemain:playgame' gms.pk %}">Continue</a>
+        {% endif %}
+    </fieldset>
+{% endfor %}
+{% endblock %}

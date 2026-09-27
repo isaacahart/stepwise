@@ -1,0 +1,37 @@
+{% extends 'stepwisemain/base.html' %}
+
+{% load django_vite %}
+
+{% block title %}Stepwise - Make a Theorem{% endblock %}
+{% block styles %}
+    {% vite_hmr_client %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stepwisemain/css/make_theorem.css' %}">
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h1>Make a theorem</h1>
+    
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+        {{ hidden.errors }}
+    {% endfor %}
+
+    <canvas class="theorem-canvas" height="0"></canvas>
+
+    <p>
+    {% for field in form.visible_fields %}
+        {{ field.label_tag }}
+        {{ field }}
+        {{ field.errors }}
+    {% endfor %}
+    </p>
+    
+    <p>Statement:</p>
+    <div class="statement-container"></div>
+    {% vite_asset 'front-end/js/ui/make_theorem_statement.js' %}
+    <p><input type="submit" value="Save"></p>
+</form>
+{% endblock %}

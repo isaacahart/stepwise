@@ -1,0 +1,10 @@
+a {
+    display: block;
+}
+
+fieldset {
+  border: none;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  margin-bottom: 10px;
+}

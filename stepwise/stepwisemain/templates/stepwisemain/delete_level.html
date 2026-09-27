@@ -1,0 +1,17 @@
+{% extends 'stepwisemain/base.html' %}
+
+{% block title %}Stepwise - Delete Level{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ level.name }}?<br/>
+        This will also delete all attatched axioms and theorems.
+    </p>
+    <p>
+        <a href="{% url 'stepwisemain:edituniverse' unvid %}" class="button">
+            Cancel
+        </a>
+        <input type="submit" value="Delete" class="delete">
+    </p>
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "stepwisemain/base_with_bar.html" %}
+
+{% block inner_content %}
+<h1>Welcome to Stepwise!</h1>
+<p>
+    Stepwise lets you prove mathematical theorems using code blocks.
+    You don't need to have any background in math to use Stepwise - it is intended to be accessible to anyone who is curious about proofs.
+    <br><br>Learning proofs shouldn't be a tedious task.
+    That's why in Stepwise, proofs are structured like a game, 
+    where in each level you prove a theorem that builds off of what you proved in previous levels.
+    These "games" are created by users just like you. And you can create your own projects for others to play, themed around whatever you like!
+    You're encouraged to come up with your own mathematical systems (or bring real-world theories into Stepwise)
+    and share them with the Stepwise community.
+    And don't worry... all such creations are worthwhile!
+</p>
+<h2>Where to start</h2>
+<p>
+    New to Stepwise? Try the <a href="{% url 'stepwisemain:newgame' 2 %}">tutorial</a> to learn the basic functionality.
+    Then check out some of the <a href="{% url 'stepwisemain:allprojects' %}">projects</a> created by other users.
+    <br>Once you're a bit familiar with Stepwise, you can create an account and begin defining and proving your own theorems.
+</p>
+<h2>Help improve Stepwise</h2>
+<p>
+    Stepwise is still very young, so it needs your help to grow!
+    <br>One way to help is to create and share projects.
+    <br>Another way is to <a href="{% url 'stepwisemain:suggest' %}">suggest features</a> 
+    or <a href="{% url 'stepwisemain:reportbugs' %}">report bugs</a>.
+    I'm especially interested in ideas for how to make Stepwise more approachable,
+    since I understand how tricky these highly abstract concepts can be.
+</p>
+<h2>Credits</h2>
+<p>
+    Stepwise was created by Isaac Hart, a high school student from Boston, MA.
+    <br>It was inspired by <a href="https://scratch.mit.edu">Scratch</a> and the <a href="https://adam.math.hhu.de/#/">Lean Game Server</a>.
+    <br>The website was created with help from Shannon Turner (creator of <a href="https://www.metromapmaker.com">MetroMapMaker</a>).
+    <br>No AI was used in the creation of Stepwise :)
+</p>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "stepwisemain/base_with_bar.html" %}
+
+{% block title %}Stepwise - {{ object.username }}{% endblock %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'stepwisemain/css/user_profile.css' %}">
+{% endblock %}
+
+{% block inner_content %}
+<h1>{{ object.username }}'s profile</h1>
+<fieldset>
+    <h2>About {{ object.username }}</h2>
+    {% if user == object %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <p><textarea name="about" maxlength="2000">{{ object.about }}</textarea></p>
+            <input type="submit" value="Update about me">
+        </form>
+    {% else %}
+        <p>{{ object.about }}</p>
+    {% endif %}
+</fieldset>
+<fieldset>
+    <h2>Projects</h2>
+    <p>{{ object.username }} has created {{ object.universe_set.all | length }} project{{ object.universe_set.all | length | pluralize }}</p>
+    <a href="{% url 'stepwisemain:useruniverses' object.pk %}">See Projects</a>
+</fieldset>
+<fieldset>
+    <h2>Liked Projects</h2>
+    <p>{{ object.username }} has liked {{ object.likedby.all | length }} project{{ object.likedby.all | length | pluralize }}</p>
+    <a href="{% url 'stepwisemain:userliked' object.pk %}">See Projects Liked</a>
+</fieldset>
+<fieldset>
+    <h2>Projects Played</h2>
+    <p>{{ object.username }} has played {{ object.gamestate_set.all | length }} project{{ object.gamestate_set.all | length | pluralize }}</p>
+    <a href="{% url 'stepwisemain:usergames' object.pk %}">See Projects Played</a>
+</fieldset>
+{% endblock %}

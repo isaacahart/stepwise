@@ -1,0 +1,68 @@
+{% extends 'stepwisemain/base.html' %}
+
+{% block title %}Stepwise - Make a Level{% endblock %}
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stepwisemain/css/make_level.css' %}">
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <h1>Make a level</h1>
+
+    {{ form.errors }}
+
+    <p>
+    {{ form.name.label_tag }}
+    {{ form.name }}
+    {{ form.color.label_tag }}
+    {{ form.color }}
+    </p>
+
+    {% if form.instance.theorem %}
+    <p>
+    <input type="submit" value="Play Level" name="play-level" class="play">
+    </p>
+    {% endif %}
+
+    <p>
+    Theorem: {{ form.instance.theorem.name }}
+    <input type="submit" value="Edit Theorem" name="edit-theorem">
+    </p>
+
+    <p>
+    {{ form.is_practice.label_tag }}
+    {{ form.is_practice }}
+    </p>
+
+    {% if axioms %}
+        <p>New axioms unlocked in this level:</p>
+        <ul>
+        {% for axiom in axioms %}
+            <li>{{ axiom.name }}
+            <button type="submit" value="{{ axiom.pk }}" name="edit-axiom">
+                Edit
+            </button>
+            <a href="{% url 'stepwisemain:deleteaxiom' unvid form.instance.pk axiom.pk %}" class="delete button">
+                Delete
+            </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No axioms unlocked in this level</p>
+    {% endif %}
+    <input type="submit" value="Add Axiom" name="new-axiom">
+
+    <p>New special blocks unlocked in this level:</p>
+    {{ form.new_special_blocks }}
+
+    <p>
+    {{ form.help_text.label_tag }}
+    {{ form.help_text }}
+    </p>
+
+    <input type="submit" value="Save" name="save">
+</form>
+{% endblock %}

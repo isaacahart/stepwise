@@ -1,0 +1,162 @@
+body {
+    background-color: lightgray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: medium;
+}
+
+h2 {
+    font-size: medium;
+}
+
+input, select, textarea, button {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: rgb(22, 111, 212);
+}
+
+a:visited {
+    color: rgb(28, 121, 164);
+}
+
+a:active {
+    color: rgb(34, 153, 56);
+}
+
+input[type="button"], button, .button, .button:visited, input[type="submit"] {
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(49, 179, 239);
+
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: small;
+
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+input[type="button"]:hover, button:hover, .button:hover, input[type="submit"]:hover {
+    background-color: rgb(47, 167, 222);
+}
+
+.delete {
+    background-color: rgb(227, 76, 76) !important;
+}
+
+.delete:hover {
+    background-color: rgb(204, 66, 66) !important;
+}
+
+.play, .green {
+    background-color: rgb(51, 189, 104) !important;
+}
+
+.play:hover, .green:hover {
+    background-color: rgb(46, 173, 94) !important;
+}
+
+.top-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(49, 179, 239);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+
+.top-bar li {
+  float: left;
+}
+
+.top-bar li a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.top-bar li button {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-radius: 0;
+  font-weight: normal;
+  font-size: medium;
+}
+
+.top-bar li a:hover {
+  background-color: rgb(49, 171, 228);
+}
+
+main {
+    margin-top: 60px;
+}
+
+select {
+    border: 1px solid rgb(225, 225, 225);
+    border-radius: 10px;
+    background-color: white;
+    margin-right: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+select:hover {
+    border: 1px solid rgb(180, 180, 180);
+}
+
+input[type="text"], input[type="password"] {
+    border-radius: 20px;
+    padding: 2px;
+    padding-left: 8px;
+    outline: none;
+}
+
+textarea {
+    border-radius: 8px;
+    padding: 2px;
+    outline: none;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+    border: 2px solid black;
+}
+
+input[type="color"] {
+  border-radius: 50%;
+  inline-size: 30px;
+  block-size: 30px;
+  border: none;
+  padding: 0px;
+  position: relative;
+  bottom: -10px;
+}
+
+
+.top-search {
+  border-radius: 10px !important;
+  margin: 6px;
+  height: 30px;
+  color: white;
+  background-color: rgb(37, 146, 197);
+  border: none;
+  font-size: medium;
+}
+
+.top-search:focus {
+  background-color: rgb(32, 131, 177);
+  border: none !important;
+}

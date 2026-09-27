@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load django_vite %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Stepwise{% endblock %}</title>
+    {% vite_hmr_client %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stepwisemain/css/base_style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

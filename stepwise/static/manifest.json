@@ -1,0 +1,42 @@
+{
+  "_drawing_base-90T6WuMP.js": {
+    "file": "assets/drawing_base-90T6WuMP.js",
+    "name": "drawing_base"
+  },
+  "_make_statement_ui-CvxUsNv8.js": {
+    "file": "assets/make_statement_ui-CvxUsNv8.js",
+    "name": "make_statement_ui",
+    "imports": [
+      "_drawing_base-90T6WuMP.js"
+    ]
+  },
+  "front-end/js/ui/make_theorem_statement.js": {
+    "file": "js/make-theorem-statement-bundle.js",
+    "name": "make-theorem-statement",
+    "src": "front-end/js/ui/make_theorem_statement.js",
+    "isEntry": true,
+    "imports": [
+      "_drawing_base-90T6WuMP.js",
+      "_make_statement_ui-CvxUsNv8.js"
+    ]
+  },
+  "front-end/js/ui/play_level.js": {
+    "file": "js/play-level-bundle.js",
+    "name": "play-level",
+    "src": "front-end/js/ui/play_level.js",
+    "isEntry": true,
+    "imports": [
+      "_drawing_base-90T6WuMP.js",
+      "_make_statement_ui-CvxUsNv8.js"
+    ]
+  },
+  "front-end/js/ui/world_map.js": {
+    "file": "js/world-map-bundle.js",
+    "name": "world-map",
+    "src": "front-end/js/ui/world_map.js",
+    "isEntry": true,
+    "imports": [
+      "_drawing_base-90T6WuMP.js"
+    ]
+  }
+}

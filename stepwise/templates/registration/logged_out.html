@@ -1,0 +1,8 @@
+{% extends "stepwisemain/base_with_bar.html" %}
+
+{% block title %}Stepwise - Logged Out{% endblock %}
+
+{% block inner_content %}
+    <p>Logged out!</p>
+    <a href="{% url 'stepwisemain:index' %}">Home</a>
+{% endblock %}

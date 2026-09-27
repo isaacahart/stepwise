@@ -1,0 +1,13 @@
+{% extends "stepwisemain/universe_list.html" %}
+
+{% block title %}Stepwise - Projects by {{ username }}{% endblock %}
+
+{% block header %}
+    <h1>Projects created by <a href="{% url 'stepwisemain:profile' userid %}">{{ username }}</a></h1>
+    {% if not universe_list %}
+        <p>{{ username }} has not created any projects yet.</p>
+    {% endif %}
+    {% if user.id == userid %}
+        <p><a href="{% url 'stepwisemain:makeuniverse' %}" class="button">New project</a></p>
+    {% endif %}
+{% endblock %}
