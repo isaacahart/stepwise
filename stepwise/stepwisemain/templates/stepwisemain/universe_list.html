@@ -1,0 +1,63 @@
+{% extends "stepwisemain/base_with_bar.html" %}
+
+{% block title %}Stepwise - Projects{% endblock %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'stepwisemain/css/project_list.css' %}">
+{% endblock %}
+
+{% block inner_content %}
+{% block header %}
+    <p>
+        Sort by: <a href="{% url 'stepwisemain:allprojects' %}?q={{ request.GET.q }}">Oldest</a> | <a href="{% url 'stepwisemain:recentprojects' %}?q={{ request.GET.q }}">Last Updated</a> | <a href="{% url 'stepwisemain:mostplayedprojects' %}?q={{ request.GET.q }}">Plays</a> | <a href="{% url 'stepwisemain:mostlikedprojects' %}?q={{ request.GET.q }}">Likes</a> 
+    </p>
+    {% if header %}
+        <h1>{{ header }}</h1>
+    {% endif %}
+{% endblock %}
+{% for unv in universe_list %}
+    <fieldset>
+        <h2>{{ unv.name }}</h2>
+        <p>{{ unv.description }}</p>
+        <p>
+            <a class="button" href="{% url 'stepwisemain:newgame' unv.pk %}">Play</a>
+            {% if user == unv.owner %}
+                <a class="button" href="{% url 'stepwisemain:edituniverse' unv.pk %}">Edit</a>
+            {% endif %}
+            by <a href="{% url 'stepwisemain:profile' unv.owner.pk %}">{{ unv.owner.username }}</a>
+            - {{ unv.level_set.all|length }} levels
+            - {{ unv.plays }} plays
+            - {{ unv.likes }} likes
+            {% if not unv.is_shared %}
+                - Unlisted
+            {% endif %}
+        </p>
+    </fieldset>
+{% endfor %}
+
+{% if is_paginated %}
+  <div class="pagination">
+    <span class="step-links">
+      
+      <!-- Previous Page Links -->
+      {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <!-- Current Page Indicator -->
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      <!-- Next Page Links -->
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    </span>
+  </div>
+{% endif %}
+{% endblock %}

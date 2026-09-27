@@ -1,0 +1,35 @@
+{% extends 'stepwisemain/base.html' %}
+
+{% block content %}
+    <header>
+        <nav>
+            <ul class="top-bar">
+                <li><a href="{% url 'stepwisemain:index' %}">∫𝕋𝔼ℙ𝕎𝕀𝕊∃</a></li>
+                <li><a href="{% url 'stepwisemain:recentprojects' %}">Projects</a></li>
+                <li style="float: center;">
+                    <form method="GET" action="{% url 'stepwisemain:recentprojects' %}">
+                        <input type="text" name="q" placeholder="Search projects..." value="{{ request.GET.q }}" class="top-search">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
+                </li>
+                {% if user.is_authenticated %}
+                    <li style="float: right;"><form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-link">Logout</button>
+                    </form></li>
+                    <li style="float: right;"><a href="{% url 'stepwisemain:profile' user.pk %}">{{ user.username }}</a></li>
+                    <li style="float: right;"><a href="{% url 'stepwisemain:useruniverses' user.pk %}">My projects</a></li>
+                    <li style="float: right;"><a href="{% url 'stepwisemain:usergames' user.pk %}">My games</a></li>
+                {% else %}
+                    <li style="float: right;"><a href="{% url 'signup' %}">Sign up</a></li>
+                    <li style="float: right;"><a href="{% url 'login' %}">Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block inner_content %}
+        {% endblock %}
+    </main>
+{% endblock %}

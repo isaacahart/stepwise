@@ -1,0 +1,10 @@
+{% extends "stepwisemain/game_list.html" %}
+
+{% block title %}Stepwise - Projects played by {{ username }}{% endblock %}
+
+{% block header %}
+    <h1>Games played by <a href="{% url 'stepwisemain:profile' userid %}">{{ username }}</a></h1>
+    {% if not object_list %}
+        <p>{{ username }} has not created any projects yet.</p>
+    {% endif %}
+{% endblock %}

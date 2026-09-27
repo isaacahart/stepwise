@@ -1,0 +1,8 @@
+{
+  "front-end/index.js": {
+    "file": "js/index-bundle.js",
+    "name": "index",
+    "src": "front-end/index.js",
+    "isEntry": true
+  }
+}

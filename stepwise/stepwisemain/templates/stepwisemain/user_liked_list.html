@@ -1,0 +1,10 @@
+{% extends "stepwisemain/universe_list.html" %}
+
+{% block title %}Stepwise - Projects liked by {{ username }}{% endblock %}
+
+{% block header %}
+    <h1>Projects liked by <a href="{% url 'stepwisemain:profile' userid %}">{{ username }}</a></h1>
+    {% if not universe_list %}
+        <p>{{ username }} has not liked any projects yet.</p>
+    {% endif %}
+{% endblock %}

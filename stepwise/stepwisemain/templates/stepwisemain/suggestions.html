@@ -1,0 +1,16 @@
+{% extends "stepwisemain/base_with_bar.html" %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'stepwisemain/css/suggest.css' %}">
+{% endblock %}
+
+{% block title %}Stepwise - Make Suggestions{% endblock %}
+
+{% block inner_content %}
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

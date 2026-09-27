@@ -1,0 +1,28 @@
+select[name="statement-type"] {
+    margin-bottom: 5px;
+}
+
+fieldset {
+    border: none;
+    border-radius: 10px;
+}
+
+fieldset.simple { background-color: lightgray; }
+fieldset.not { background-color: rgb(199, 187, 226); }
+fieldset.and { background-color: rgb(181, 218, 227); }
+fieldset.or { background-color: rgb(162, 205, 198); }
+fieldset.implication { background-color: rgb(165, 208, 225); }
+fieldset.equivalence { background-color: rgb(149, 184, 216); }
+fieldset.for-all { background-color: rgb(178, 181, 206); }
+fieldset.exists { background-color: rgb(161, 174, 225); }
+fieldset.axiom-schema { background-color: rgb(212, 187, 217); }
+fieldset.statement-app { background-color: lightgray; }
+
+.and-or-button {
+    margin-bottom: 10px;
+}
+
+.var-input {
+    width: 100px;
+    margin-right: 10px;
+}

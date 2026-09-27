@@ -1,0 +1,102 @@
+<html lang="en-US">
+    {% load django_vite %}
+    <head>
+        {% vite_hmr_client %}
+        <title>Stepwise - Play Level</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'stepwisemain/css/base_style.css' %}">
+        <link rel="stylesheet" href="{% static 'stepwisemain/css/play_level.css' %}">
+        <link rel="stylesheet" href="{% static 'stepwisemain/css/make_theorem.css' %}">
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    </head>
+    <body>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="theorem">
+                <input type="hidden" class="theorem-name" value="{{ level.theorem.name }}">
+                <input type="hidden" class="theorem-color" value="{{ level.theorem.color }}">
+                <input type="hidden" class="theorem-statement" value="{{ theorem_statement }}">
+            </div>
+
+            <input type="hidden" name="proof_steps" class="proof-steps" value="{{ proof_steps }}">
+            <input type="hidden" name="new_special_blocks" class="special-blocks" value="{{ new_special_blocks }}">
+
+            <div class="theorem-list">
+                {% for category, theorems in unlocked_thms.items %}
+                    <div class="block-category" data-category="{{ category }}">
+                    {% for theorem in theorems %}
+                        <input type="hidden"
+                        class="theorem-block"
+                        data-id="{{ theorem.pk }}"
+                        data-name="{{ theorem.name }}"
+                        data-color="{{ theorem.color }}"
+                        data-statement="{{ theorem.get_statement }}">
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="sidebar">
+                <canvas class="list-display"
+                style="position: absolute; top: 0; left: 0;"></canvas>
+            </div>
+            <canvas class="proof-display"
+            style="position: absolute; top: 0; left: 0;"></canvas>
+            <canvas class="tab-display"
+            style="position: fixed; top: 0; left: 0;"></canvas>
+            <canvas class="dragging-display"
+            style="position: fixed;"></canvas>
+
+            <canvas class="thm-statement-display" 
+            width="300px" height="300px"
+            style="position:fixed;"></canvas>
+
+            <div class="edit-output hidden">
+                <h1>Edit object appearance</h1>
+
+                <div style="flex-basis: 100%;"></div>
+                <label for="output-name">Name: </label>
+                <div style="flex-basis: 100%;"></div>
+                <input type="text" maxlength="20" name="output-name">
+                
+                <div style="flex-basis: 100%;"></div>
+                <label for="output-color">Color: </label>
+                <div style="flex-basis: 100%;"></div>
+                <input type="color" name="output-color">
+                
+                <div style="flex-basis: 100%;"></div>
+                <button type="button" class="close-edit-output">Done</button>
+            </div>
+
+            <div class="edit-statement hidden">
+                <h1>Edit statement</h1>
+                <div style="flex-basis: 100%;"></div>
+                <div class="statement-container"></div>
+                <div style="flex-basis: 100%;"></div>
+                <button type="button" class="close-edit-statement">Done</button>
+            </div>
+
+            {% if level.help_text %}
+            <div class="help-text hidden">
+                <h1>{{ level.name }}</h1>
+                <div style="flex-basis: 100%;"></div>
+                <p class="help-text-p">{% for line in level.help_text.splitlines %}
+                    {{ line }}<br>
+                {% endfor %}</p>
+                <div style="flex-basis: 100%;"></div>
+                <button type="button" class="close-help-text">Close</button>
+            </div>
+            <button type="button" class="open-help-text" style="position: fixed; top:35; right:5">Help</button>
+            {% endif %}
+
+            <div class="shade hidden"></div>
+
+            <input type="hidden" value="false" name="completed" class="completed">
+
+            <input type="submit" value="Back" style="position: fixed; top:5; right:5;">
+
+            {% vite_asset 'front-end/js/ui/play_level.js' %}
+        </form>
+    </body>
+</html>
