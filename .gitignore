@@ -223,5 +223,8 @@ __marimo__/
 # Database
 *.sqlite3
 
+# Environment
+.env
+
 # node modules
 node_modules/
