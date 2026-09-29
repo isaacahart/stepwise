@@ -7,7 +7,7 @@ class Universe(models.Model):
     description = models.TextField(max_length=1000, blank=True)
     update_date = models.DateTimeField(null=True)
     is_shared = models.BooleanField(default=False)
-    edges = models.JSONField(default=list)
+    edges = models.JSONField(default=list, blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     plays = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
