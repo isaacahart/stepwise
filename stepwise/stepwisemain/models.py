@@ -74,7 +74,7 @@ class GameState(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
 def default_coord():
-    return {"x": 100, "y":100}
+    return "{\"x\":100,\"y\":100}"
 
 class Level(models.Model):
     name = models.CharField(max_length=100)
