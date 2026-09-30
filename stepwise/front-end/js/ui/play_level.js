@@ -6,7 +6,7 @@ import { drawHoveredInformation } from "../proverui/block_information.js";
 import { drawBlockList, mouseDownOnBlockList } from "../proverui/block_list.js";
 import { drawObjectList, mouseDownOnObjectList } from "../proverui/object_list.js";
 import { drawProofHoveredInfo, mouseDownOnProof, mouseUpOnProof, runProofFromChangedOutput } from "../proof/interact_with_proof.js";
-import { drawStatementList } from "../proverui/statement_list.js";
+import { drawStatementList, mouseDownOnStatementList, setupStatementCanvas } from "../proverui/statement_list.js";
 import { emptySpaceWithTheorems } from "../space/space_base.js";
 import { setupBlockCanvas, setupBlockStackCanvas } from "../block/draw_block.js";
 import { setupObjectCanvas } from "../object/draw_object.js";
@@ -35,7 +35,6 @@ db.setupCanvas(proofDisplay, innerWidth-db.proofX, innerHeight);
 listDisplay.style.top = db.tabSelectHeight;
 proofDisplay.style.left = db.proofX;
 proofDisplay.style.top = db.proofY;
-console.log(db.proofX, proofDisplay.style.left);
 drawHoveredInformation(thmStatementDisplay, {type: "none"});
 
 var thmName = document.querySelector(".theorem-name").value;
@@ -146,6 +145,8 @@ function beginDrag(x, y) {
     setupObjectCanvas(draggingDisplay, dragging.object);
   } else if (dragging.type === "block-stack") {
     setupBlockStackCanvas(draggingDisplay, dragging.blocks, space);
+  } else if (dragging.type === "statement") {
+    setupStatementCanvas(draggingDisplay, dragging.statement, proof.currentBranch);
   }
   db.moveCanvasTo(draggingDisplay, x, y + (draggingDisplay.height - db.blockSize) / 2);
   updateStepsInput()
@@ -180,6 +181,8 @@ function listMouseDownEvent(event) {
     dragging = mouseDownOnBlockList(blockList, categoryCounts, event.offsetX, event.offsetY);
   } else if (listTab === "objects") {
     dragging = mouseDownOnObjectList(proof.currentBranch, event.offsetX, event.offsetY);
+  } else if (listTab === "statements") {
+    dragging = mouseDownOnStatementList(proof.currentBranch, proof, event.offsetX, event.offsetY);
   }
   beginDrag(event.clientX, event.clientY);
 }

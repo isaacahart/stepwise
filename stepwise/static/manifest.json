@@ -1,13 +1,13 @@
 {
-  "_drawing_base-90T6WuMP.js": {
-    "file": "assets/drawing_base-90T6WuMP.js",
+  "_drawing_base-BFf0R6iU.js": {
+    "file": "assets/drawing_base-BFf0R6iU.js",
     "name": "drawing_base"
   },
-  "_make_statement_ui-CvxUsNv8.js": {
-    "file": "assets/make_statement_ui-CvxUsNv8.js",
+  "_make_statement_ui-BBadlLXE.js": {
+    "file": "assets/make_statement_ui-BBadlLXE.js",
     "name": "make_statement_ui",
     "imports": [
-      "_drawing_base-90T6WuMP.js"
+      "_drawing_base-BFf0R6iU.js"
     ]
   },
   "front-end/js/ui/make_theorem_statement.js": {
@@ -16,8 +16,8 @@
     "src": "front-end/js/ui/make_theorem_statement.js",
     "isEntry": true,
     "imports": [
-      "_drawing_base-90T6WuMP.js",
-      "_make_statement_ui-CvxUsNv8.js"
+      "_drawing_base-BFf0R6iU.js",
+      "_make_statement_ui-BBadlLXE.js"
     ]
   },
   "front-end/js/ui/play_level.js": {
@@ -26,8 +26,8 @@
     "src": "front-end/js/ui/play_level.js",
     "isEntry": true,
     "imports": [
-      "_drawing_base-90T6WuMP.js",
-      "_make_statement_ui-CvxUsNv8.js"
+      "_drawing_base-BFf0R6iU.js",
+      "_make_statement_ui-BBadlLXE.js"
     ]
   },
   "front-end/js/ui/world_map.js": {
@@ -36,7 +36,7 @@
     "src": "front-end/js/ui/world_map.js",
     "isEntry": true,
     "imports": [
-      "_drawing_base-90T6WuMP.js"
+      "_drawing_base-BFf0R6iU.js"
     ]
   }
 }

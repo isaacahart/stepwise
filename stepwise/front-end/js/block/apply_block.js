@@ -165,7 +165,7 @@ function clearUndefinedStatements(block, space) {
   var data = getBlockData(block, space);
   var stas = data.statementInputs;
   for (var i = 0; i < stas.length; i++) {
-    var len = space.objects.length + data.boundVariables.length;
+    var len = space.objects.length + data.boundVariables[i].length;
     if (anyVariablesUndefined(stas[i], [...Array(len).keys()])) {
       clearStatement(stas[i]);
     }

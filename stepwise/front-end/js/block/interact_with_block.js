@@ -26,6 +26,7 @@ blocks: [<block>]
 
 import * as db from "../drawing/drawing_base.js";
 import { objectWidth } from "../object/draw_object.js";
+import { overwriteStatement } from "../statement/statement_base.js";
 import { getBlockData, proofHeaderData } from "./block_data.js";
 import { statementInputWidth } from "./draw_block.js";
 
@@ -112,7 +113,15 @@ function mouseUpOnGenericBlock(ctx, data, dragging, x, y) {
     for (var j = 0; j < data.boundVariables[i].length; j++) {
       tempx += objectWidth(ctx, data.boundVariables[i][j]) + db.blockMarginSize;
     }
-    tempx += statementInputWidth(ctx, data.statementInputStrings[i]) + db.blockMarginSize;
+    var w = statementInputWidth(ctx, data.statementInputStrings[i]) + db.blockMarginSize;
+    if (x > tempx && x < tempx + w) {
+      // interact with statement input
+      if (dragging.type === "statement") {
+        overwriteStatement(data.statementInputs[i], dragging.statement);
+        return true;
+      }
+    }
+    tempx += w;
   }
 
   for (var i = 0; i < data.inputObjs.length; i++) {
@@ -120,7 +129,6 @@ function mouseUpOnGenericBlock(ctx, data, dragging, x, y) {
 
     if (x > tempx && x < tempx + w) {
       // interact with object input
-      // check whether the input is filled
       if (dragging.type === "object") {
         data.inputIds[i] = dragging.objectId;
         return true;

@@ -251,3 +251,10 @@ export function listContainsStatement(staList, sta) {
 export function trueByReflexivity(sta) {
   return sta.type == "simple" && sta.relation == "equal" && sta.objects.length == 2 && sta.objects[0] == sta.objects[1];
 }
+
+export function overwriteStatement(sta1, sta2) {
+  for (const key in sta1) {
+    delete sta1[key];
+  }
+  Object.assign(sta1, sta2);
+}

@@ -8,6 +8,7 @@
 <form method="post">
   {% csrf_token %}
   {{ form }}
+  <p>Be sure to write down your password somewhere safe!</p>
   <button type="submit">Sign Up</button>
 </form>
 {% endblock %}
