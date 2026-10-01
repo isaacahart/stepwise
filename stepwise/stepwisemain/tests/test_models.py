@@ -74,6 +74,11 @@ class UniverseTest(TestCase):
         self.assertEqual(unv.get_unlocked_levels([1,2,6]), [1,2,3,4])
         self.assertEqual(unv.get_unlocked_levels([1,2,3,4,6]), [1,2,3,4,5,6])
 
+    def test_delete_edges_on_level_delete(self):
+        unv = Universe.objects.get(name="unv1")
+        unv.delete_edges_on_level_delete(3)
+        self.assertEqual(unv.edges, [{"from":1, "to":2}, {"from":2, "to":4}, {"from":4, "to":5}])
+
 
 class TheoremCategoryTest(TestCase):
     def setUp(self):

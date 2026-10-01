@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 import json
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class Universe(models.Model):
     name = models.CharField(max_length=100)
@@ -65,6 +67,14 @@ class Universe(models.Model):
                 unlocked.append(level.pk)
         return unlocked
 
+    def delete_edges_on_level_delete(self, deletedLvl):
+        idx = 0
+        while idx < len(self.edges):
+            if self.edges[idx]["to"] == deletedLvl or self.edges[idx]["from"] == deletedLvl:
+                self.edges.pop(idx)
+            else:
+                idx += 1
+
 
 
 class GameState(models.Model):
@@ -111,6 +121,11 @@ def sort_theorems_by_category(thms):
         else:
             out[thm.category] = [thm]
     return out
+
+@receiver(post_delete, sender=Level)
+def level_deleted_handler(sender, instance, **kwargs):
+    print(instance.universe, instance.pk)
+    instance.universe.delete_edges_on_level_delete(instance.pk)
 
 def default_statement():
     return {"type": "simple", "relation": "", "objects":[]}
