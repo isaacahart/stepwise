@@ -1,20 +1,24 @@
 import { checkComplete } from "../block/check_complete";
 import { emptySpace } from "../space/space_base";
-import { makeExistsStatement, makeSimpleStatement } from "../statement/statement_base"
+import { makeExistsStatement, makeNotStatement, makeSimpleStatement, makeAndStatement, makeOrStatement } from "../statement/statement_base"
 
-const exCG1 = {type:"complete-goal", inputs:[]}
-const exCG2 = {type:"complete-goal", inputs:[3]}
-const exCG3 = {type:"complete-goal", inputs:[4, 2]}
+const exCG1 = {type:"complete-goal", inputs:[]};
+const exCG2 = {type:"complete-goal", inputs:[3]};
+const exCG3 = {type:"complete-goal", inputs:[4, 2]};
 const exGoal1 = makeSimpleStatement("foo", [0, 2]);
 const exGoal2 = makeExistsStatement("x", "#123456", exGoal1, 2);
 const exGoal3 = makeExistsStatement("y", "#abcdef", exGoal2, 0);
+const exContra1 = {type:"find-contradiction", statement: exGoal1};
 var exSpace1 = emptySpace();
 var exSpace2 = emptySpace();
 var exSpace3 = emptySpace();
+var exSpace4 = emptySpace();
+var exSpace5 = emptySpace();
 exSpace1.statements.push(exGoal1);
 exSpace2.statements.push(makeSimpleStatement("foo", [4, 2]));
-exSpace3.statements.push(makeSimpleStatement("foo", [4, 2]));
-exSpace3.statements.push(exGoal1);
+exSpace3.statements.push(makeSimpleStatement("foo", [4, 2]), exGoal1);
+exSpace4.statements.push(exGoal1, makeSimpleStatement("foo", [4, 2]), makeNotStatement(exGoal1));
+exSpace5.statements.push(exGoal2, makeNotStatement(exGoal2));
 
 test("complete no goals", () => {
     expect(checkComplete(exCG1, exSpace1, [])).toBe(true);
@@ -82,4 +86,16 @@ test("complete two goals with too many inputs", () => {
     var exCG4 = {type:"complete-goal", inputs:[3, 4, 6, 7]};
     checkComplete(exCG4, exSpace1, [exGoal3, exGoal1, exGoal2]);
     expect(exCG4.inputs).toStrictEqual([3, 4, 6]);
+})
+
+test("find no contradiction", () => {
+    expect(checkComplete(exContra1, exSpace3, [])).toBe(false);
+})
+
+test("find contradiction", () => {
+    expect(checkComplete(exContra1, exSpace4, [])).toBe(true);
+})
+
+test("find no contradiction again", () => {
+    expect(checkComplete(exContra1, exSpace5, [])).toBe(false);
 })

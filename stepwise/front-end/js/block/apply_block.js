@@ -28,7 +28,8 @@ export function applyBlock(block, space, proof) {
     applyReflexivityBlock,
     applySubstituteBlock,
     applyProofByContradictionBlock,
-    applyExistsDefinitionBlock
+    applyExistsDefinitionBlock,
+    (block, space, proof) => {}
   ]);
   clearUndefinedStatements(block, space);
   return f(block, space, proof);

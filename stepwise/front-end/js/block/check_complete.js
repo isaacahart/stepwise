@@ -1,14 +1,21 @@
-import { statementInSpace, tautologicallyImpliedInSpace } from "../space/space_base.js";
+import { impliedWithMinimalLogicInSpace } from "../space/space_base.js";
+import { makeNotStatement } from "../statement/statement_base.js";
 import { assignObjectToQuantifier } from "../theorem/assign_objects.js";
 import { countExistStatements } from "../theorem/theorem_base.js";
 
 
 export function checkComplete(block, space, goals) {
   // has the goal been completed //
-  if (block.type !== "complete-goal") {
-    return false;
+  if (block.type == "complete-goal") {
+    return completeGoal(block, space, goals);
+  } else if (block.type == "find-contradiction") {
+    return findContradiction(block, space);
   }
 
+  return false
+}
+
+function completeGoal(block, space, goals) {
   goals = structuredClone(goals);
   var inputIdx = 0;
   var complete = true;
@@ -25,7 +32,7 @@ export function checkComplete(block, space, goals) {
       inputIdx++;
     }
 
-    if (!tautologicallyImpliedInSpace(goals[i], space)) {
+    if (!impliedWithMinimalLogicInSpace(goals[i], space)) {
       complete = false;
     }
   }
@@ -34,4 +41,13 @@ export function checkComplete(block, space, goals) {
 
   block.successful = complete;
   return complete;
+}
+
+function findContradiction(block, space) {
+  if (impliedWithMinimalLogicInSpace(block.statement, space) && impliedWithMinimalLogicInSpace(makeNotStatement(block.statement), space)) {
+    block.successful = true
+    return true;
+  }
+  block.successful = false;
+  return false;
 }

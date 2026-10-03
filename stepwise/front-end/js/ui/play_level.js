@@ -1,5 +1,5 @@
 import * as db from "../drawing/drawing_base.js";
-import { createCompleteGoal, createTheoremAppFromTheorem, makeExistsDefinitionBlock, makeModusPonensBlock, makeProofByContradictionBlock, makeProveExistsBlock, makeProveForAllBlock, makeProveIfBlock, makeReflexivityBlock, makeSubstituteBlock, makeTautologyBlock } from "../block/block_base.js";
+import { createCompleteGoal, createTheoremAppFromTheorem, makeExistsDefinitionBlock, makeFindContradictionBlock, makeModusPonensBlock, makeProofByContradictionBlock, makeProveExistsBlock, makeProveForAllBlock, makeProveIfBlock, makeReflexivityBlock, makeSubstituteBlock, makeTautologyBlock } from "../block/block_base.js";
 import { objectNamesAtStep, runAndDrawProof, setupProof } from "../proof/proof_base.js";
 import { mouseDownOnTab, setupListCanvas, setupTabCanvas } from "../proverui/prover_base.js";
 import { drawHoveredInformation } from "../proverui/block_information.js";
@@ -65,8 +65,9 @@ function addSpecialBlock(type, constuctor) {
 }
 
 addSpecialBlock("substitute", makeSubstituteBlock);
-addSpecialBlock("exists-definition", makeExistsDefinitionBlock);
 addSpecialBlock("reflexive-equality", makeReflexivityBlock);
+addSpecialBlock("exists-definition", makeExistsDefinitionBlock);
+addSpecialBlock("find-contradiction", makeFindContradictionBlock);
 addSpecialBlock("proof-by-contradiction", makeProofByContradictionBlock);
 addSpecialBlock("prove-exists", makeProveExistsBlock);
 addSpecialBlock("prove-for-all", makeProveForAllBlock);

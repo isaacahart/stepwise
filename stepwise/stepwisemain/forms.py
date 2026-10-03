@@ -120,6 +120,8 @@ def block_valid(block):
         return proof_by_contradiction_valid(block)
     elif block["type"] == "exists-definition":
         return exists_definition_block_valid(block)
+    elif block["type"] == "find-contradiction":
+        return find_contradiction_block_valid(block)
     else:
         return False
 
@@ -259,6 +261,15 @@ def exists_definition_block_valid(block):
         return False
     return True
 
+def find_contradiction_block_valid(block):
+    if "statement" not in block or "successful" not in block:
+        return False
+    if type(block["successful"]) != bool:
+        return False
+    if not statement_valid(block["statement"]):
+        return False
+    return True
+
 
 def block_list_valid(blocks):
     if type(blocks) != list:
@@ -323,8 +334,9 @@ SPECIAL_BLOCKS = [
     ("prove-for-all", "prove for all"),
     ("prove-exists", "prove there exists"),
     ("proof-by-contradiction", "proof by contradiction"),
-    ("reflexive-equality", "object equals itself"),
+    ("find-contradiction", "find contradiction"),
     ("exists-definition", "convert exists and for all"),
+    ("reflexive-equality", "object equals itself"),
     ("substitute", "substitute equal objects")
 ]
 

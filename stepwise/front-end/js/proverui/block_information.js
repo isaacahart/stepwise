@@ -40,7 +40,8 @@ function drawBlockInformation(canvas, block, newStas, space, inList) {
     drawReflexivityBlockInformation,
     drawSubstituteBlockInformation,
     drawProofByContradictionBlockInformation,
-    drawExistsDefinitionBlockInformation
+    drawExistsDefinitionBlockInformation,
+    drawFindContradictionBlockInformation
   ]);
   return f(canvas, block, newStas, space, inList);
 }
@@ -149,6 +150,12 @@ function drawExistsDefinitionBlockInformation(canvas, block, newStas, space, inL
     return db.drawInfoText(canvas, "'not for all [statement]' and 'exists not [statement]' are equivalent, so supply one you've established to get the other", [], space);
   }
   db.drawInfoText(canvas, "We now know:", newStas, space);
+}
+
+function drawFindContradictionBlockInformation(canvas, block, newStas, space, inList) {
+  if (inList) {
+    return db.drawInfoText(canvas, "If there is another statement that directly contradicts the given statement, this will complete your subproof", [], space);
+  }
 }
 
 

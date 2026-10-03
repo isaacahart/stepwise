@@ -71,6 +71,10 @@ statement: <statement>
 outputObjs: [<object>]
 outputBlocks: [<object>]
 
+type: find-contradiction
+statement: <statement>
+successful: <boolean>
+
 */
 
 import { emptyOutputObj } from "../object/object_base.js";
@@ -91,7 +95,8 @@ export const blockTypes = [
   "reflexive-equality",
   "substitute",
   "proof-by-contradiction",
-  "exists-definition"
+  "exists-definition",
+  "find-contradiction"
 ]
 export const defaultBlockName = ""
 export const defaultBlockColor = "#676767"
@@ -234,6 +239,13 @@ export function makeExistsDefinitionBlock() {
     statement: emptyStatement(),
     outputObjs: [],
     outputBlocks: []
+  };
+}
+
+export function makeFindContradictionBlock() {
+  return {type: "find-contradiction",
+    statement: emptyStatement(),
+    successful: false
   };
 }
 

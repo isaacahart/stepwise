@@ -1,3 +1,6 @@
+1.2.0. 10/3/2026
+Complete goal block now no longer checks for tautological implication, instead using the same inferrence method that theorems use
+Added find contradiction block (because the complete goal block no longer works at finding contradictions)
 1.1.4. 10/3/2026
 Fixed more scrolling issues when using touch controls
 Clicking to the right of a block in a proof now no longer drags that block
@@ -9,9 +12,9 @@ The right third of the block list now no longer detects clicks, being reserved f
 Added support for touch screen controls
 1.1.1. 10/1/2026
 Fixed bug where paths between levels were not deleted when the level was deleted
-1.1. 9/30/2026
+1.1.0. 9/30/2026
 Added the ability to drag-and-drop statements from the statement list into blocks
 Fixed bug that meant undefined statements in blocks were not properly cleared
 Add message to signup form
-1.0. 9/29/2026
+1.0.0. 9/29/2026
 Release

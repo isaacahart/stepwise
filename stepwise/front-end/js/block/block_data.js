@@ -32,7 +32,8 @@ export function getBlockData(block, space, includeInputObjs=true) {
     reflexivityData,
     substituteData,
     proofByContradictionData,
-    existsDefinitionData
+    existsDefinitionData,
+    findContradictionData
   ]);
   var data = f(block, space);
   if (includeInputObjs && !("inputObjs" in data)) {
@@ -204,6 +205,19 @@ function existsDefinitionData(block, space) {
     outputBlocks: block.outputBlocks,
     statementInputs: [block.statement],
     boundVariables: [[]]
+  };
+}
+
+function findContradictionData(block, space) {
+  return {
+    name: "find contradiction to",
+    color: builtinBlockColor,
+    inputIds: [],
+    outputObjs: [],
+    outputBlocks: [],
+    statementInputs: [block.statement],
+    boundVariables: [[]],
+    textColor: block.successful ? goodTextColorBlock : normalTextColorBlock
   };
 }
 
