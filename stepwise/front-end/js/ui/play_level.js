@@ -311,6 +311,7 @@ document.addEventListener("pointerup", endDragEvent);
 tabDisplay.addEventListener("click", tabClickEvent);
 listDisplay.addEventListener("pointerdown", listMouseDownEvent);
 proofDisplay.addEventListener("pointerdown", proofMouseDownEvent);
+document.addEventListener("pointerdown", hoverEvent);
 outputBackButton.addEventListener("click", closeOutputMenu);
 editStatementBackButton.addEventListener("click", closeStatementMenu);
 if (helpTextMenu != null) {
