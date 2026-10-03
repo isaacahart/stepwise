@@ -167,14 +167,16 @@ function moveMouse(event) {
   if (!mouseDown) {
     return;
   }
+  var mx = Math.round(event.offsetX);
+  var my = Math.round(event.offsetY);
   if (selectedNode === null) {
-    sx -= (event.offsetX - prevDragX);
-    sy -= (event.offsetY - prevDragY);
-    prevDragX = event.offsetX;
-    prevDragY = event.offsetY;
+    sx -= (mx - prevDragX);
+    sy -= (my - prevDragY);
+    prevDragX = mx;
+    prevDragY = my;
   } else {
-    nodes[selectedNode].x = event.offsetX + sx;
-    nodes[selectedNode].y = event.offsetY + sy;
+    nodes[selectedNode].x = mx + sx;
+    nodes[selectedNode].y = my + sy;
     nodeElements[selectedNode].value = JSON.stringify({x:nodes[selectedNode].x, y:nodes[selectedNode].y});
   }
   drawMap();

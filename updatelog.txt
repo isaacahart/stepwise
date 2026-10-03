@@ -1,3 +1,5 @@
+1.2.1. 10/3/2026
+Fixed rounding issues introduced by touch controls that prevented level positions from being saved
 1.2.0. 10/3/2026
 Complete goal block now no longer checks for tautological implication, instead using the same inferrence method that theorems use
 Added find contradiction block (because the complete goal block no longer works at finding contradictions)
