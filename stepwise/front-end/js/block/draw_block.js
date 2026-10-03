@@ -62,6 +62,10 @@ export function drawProofHeader(canvas, x, y, proof) {
   drawGenericBlock(canvas, x, y, proofHeaderData(proof), true);
 }
 
+export function blockWidth(canvas, block, space) {
+  return genericBlockWidth(canvas.getContext("2d"), getBlockData(block, space));
+}
+
 export function genericBlockWidth(ctx, data) {
   var w = (2 + data.inputObjs.length + data.outputObjs.length + data.outputBlocks.length) * db.blockMarginSize;
   w += ctx.measureText(data.name).width;

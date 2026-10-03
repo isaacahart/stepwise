@@ -1,4 +1,5 @@
 import { cBlocks } from "../block/block_base.js";
+import { blockWidth } from "../block/draw_block.js";
 import { mouseDownOnBlock, mouseDownOnProofHeader, mouseUpOnBlock } from "../block/interact_with_block.js";
 import * as db from "../drawing/drawing_base.js";
 import { drawHoveredInformation } from "../proverui/block_information.js";
@@ -22,8 +23,14 @@ export function mouseDownOnProof(proof, space, x, y, canvas) {
   y = y - step * db.blockSize;
   var intSpace = getIntermediateState(space, step);
 
+  var indent = getProofIndent(getIntermediateState(space, step+1));
+  // stop if click is to the right of the block
+  if (x - indent > blockWidth(canvas, proof.steps[step], intSpace)) {
+    return {type:"none"};
+  }
+  
   // find what interaction is obtained by clicking the block
-  var blockInteract = mouseDownOnBlock(proof.steps[step], intSpace, x - getProofIndent(getIntermediateState(space, step+1)), y, canvas.getContext("2d"));
+  var blockInteract = mouseDownOnBlock(proof.steps[step], intSpace, x - indent, y, canvas.getContext("2d"));
   if (blockInteract.type === "none") {
     // if no interaction, the click is on the block itself
     return mouseDownOnBlockInProof(proof, space, step, canvas);

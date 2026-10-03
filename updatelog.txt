@@ -1,6 +1,10 @@
+1.1.4. 10/3/2026
+Fixed more scrolling issues when using touch controls
+Clicking to the right of a block in a proof now no longer drags that block
 1.1.3. 10/3/2026
 Fixed scrolling issues when using touch controls
 Fixed layering of information window
+The right third of the block list now no longer detects clicks, being reserved for touch screen scrolling
 1.1.2. 10/3/2026
 Added support for touch screen controls
 1.1.1. 10/1/2026

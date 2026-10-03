@@ -25,6 +25,7 @@ var draggingDisplay = document.querySelector(".dragging-display");
 var listDisplay = document.querySelector(".list-display");
 var tabDisplay = document.querySelector(".tab-display");
 var thmStatementDisplay = document.querySelector(".thm-statement-display");
+var sidebarDiv = document.querySelector(".sidebar");
 
 setupTheoremList();
 
@@ -293,15 +294,15 @@ function closeStatementMenu() {
 function disableTouchScroll() {
   document.body.style.touchAction = "none";
   document.body.style.overflow = "hidden";
-  listDisplay.style.touchAction = "none";
-  listDisplay.style.overflow = "hidden";
+  sidebarDiv.style.touchAction = "none";
+  sidebarDiv.style.overflow = "hidden";
 }
 
 function enableTouchScroll() {
   document.body.style.touchAction = "auto";
   document.body.style.overflow = "auto";
-  listDisplay.style.touchAction = "auto";
-  listDisplay.style.overflow = "auto";
+  sidebarDiv.style.touchAction = "auto";
+  sidebarDiv.style.overflow = "auto";
 }
 
 document.addEventListener("pointermove", makeDragObjectEvent(draggingDisplay));
