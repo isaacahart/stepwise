@@ -205,6 +205,6 @@ function mouseDownOnMap(event) {
 }
 
 drawMap();
-canvas.addEventListener("mousedown", mouseDownOnMap);
-canvas.addEventListener("mouseup", endDrag);
-canvas.addEventListener("mousemove", moveMouse);
+canvas.addEventListener("pointerdown", mouseDownOnMap);
+canvas.addEventListener("pointerup", endDrag);
+canvas.addEventListener("pointermove", moveMouse);

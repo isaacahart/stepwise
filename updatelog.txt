@@ -1,8 +1,10 @@
-1.0 9/29/2026
+1.0. 9/29/2026
 Release
-1.1 9/30/2026
+1.1. 9/30/2026
 Added the ability to drag-and-drop statements from the statement list into blocks
 Fixed bug that meant undefined statements in blocks were not properly cleared
 Add message to signup form
-1.1.1 10/1/2026
+1.1.1. 10/1/2026
 Fixed bug where paths between levels were not deleted when the level was deleted
+1.1.2. 10/3/2026
+Added support for touch screen controls

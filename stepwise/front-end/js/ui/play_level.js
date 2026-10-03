@@ -283,12 +283,12 @@ function closeStatementMenu() {
   drawList();
 }
 
-document.addEventListener("mousemove", makeDragObjectEvent(draggingDisplay));
-document.addEventListener("mousemove", hoverEvent);
-document.addEventListener("mouseup", endDragEvent);
+document.addEventListener("pointermove", makeDragObjectEvent(draggingDisplay));
+document.addEventListener("pointermove", hoverEvent);
+document.addEventListener("pointerup", endDragEvent);
 tabDisplay.addEventListener("click", tabClickEvent);
-listDisplay.addEventListener("mousedown", listMouseDownEvent);
-proofDisplay.addEventListener("mousedown", proofMouseDownEvent);
+listDisplay.addEventListener("pointerdown", listMouseDownEvent);
+proofDisplay.addEventListener("pointerdown", proofMouseDownEvent);
 outputBackButton.addEventListener("click", closeOutputMenu);
 editStatementBackButton.addEventListener("click", closeStatementMenu);
 if (helpTextMenu != null) {
