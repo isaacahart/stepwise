@@ -148,6 +148,9 @@ function beginDrag(x, y) {
   } else if (dragging.type === "statement") {
     setupStatementCanvas(draggingDisplay, dragging.statement, proof.currentBranch);
   }
+  if (dragging.type != "none") {
+    disableTouchScroll();
+  }
   db.moveCanvasTo(draggingDisplay, x, y + (draggingDisplay.height - db.blockSize) / 2);
   updateStepsInput()
 }
@@ -175,6 +178,9 @@ function drawList() {
 
 function listMouseDownEvent(event) {
   if (!interactable) {
+    return;
+  }
+  if (event.offsetX > db.sidebarInteractionWidth) {
     return;
   }
   if (listTab === "blocks") {
@@ -225,6 +231,7 @@ function endDragEvent(event) {
     drawList();
     hoverEvent(event);
   }
+  enableTouchScroll();
   dragging = {type: "none"};
   draggingDisplay.width = 0;
   draggingDisplay.height = 0;
@@ -281,6 +288,20 @@ function closeStatementMenu() {
   setInteractable(true);
   runProofFromChangedOutput(proof, space, proofDisplay);
   drawList();
+}
+
+function disableTouchScroll() {
+  document.body.style.touchAction = "none";
+  document.body.style.overflow = "hidden";
+  listDisplay.style.touchAction = "none";
+  listDisplay.style.overflow = "hidden";
+}
+
+function enableTouchScroll() {
+  document.body.style.touchAction = "auto";
+  document.body.style.overflow = "auto";
+  listDisplay.style.touchAction = "auto";
+  listDisplay.style.overflow = "auto";
 }
 
 document.addEventListener("pointermove", makeDragObjectEvent(draggingDisplay));

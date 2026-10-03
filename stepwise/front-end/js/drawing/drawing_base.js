@@ -14,6 +14,7 @@ export const headerCornerRadius = 20;
 export const indentSize = 20;
 export const darkenAmt = 0.8;
 export const sidebarWidth = 300;
+export const sidebarInteractionWidth = 200;
 export const proofX = sidebarWidth + 50;
 export const proofY = 50;
 export const blockMarginInList = 6;

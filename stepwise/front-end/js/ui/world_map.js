@@ -160,6 +160,7 @@ function beginDrag(event) {
 
 function endDrag(event) {
   mouseDown = false;
+  enableTouchScroll();
 }
 
 function moveMouse(event) {
@@ -197,11 +198,22 @@ function modifyEdges(event) {
 }
 
 function mouseDownOnMap(event) {
+  disableTouchScroll();
   if (event.shiftKey) {
     modifyEdges(event);
   }
   beginDrag(event);
   drawMap();
+}
+
+function disableTouchScroll() {
+  document.body.style.touchAction = 'none';
+  document.body.style.overflow = 'hidden';
+}
+
+function enableTouchScroll() {
+  document.body.style.touchAction = 'auto';
+  document.body.style.overflow = 'auto';
 }
 
 drawMap();
