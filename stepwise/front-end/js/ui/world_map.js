@@ -150,8 +150,8 @@ function getHoveredNode(x, y) {
 
 function beginDrag(event) {
   mouseDown = true;
-  prevDragX = event.offsetX;
-  prevDragY = event.offsetY;
+  prevDragX = Math.round(event.offsetX);
+  prevDragY = Math.round(event.offsetY);
   selectedNode = getHoveredNode(event.offsetX, event.offsetY);
   if (!editMode && selectedNode !== null) {
     window.location.replace(nodes[selectedNode].link);
