@@ -163,7 +163,7 @@ function drawProofHeaderInformation(canvas, theorem, newStas, goals, space) {
   drawTheoremByStatement(canvas, 5, 10, theorem.name, theorem.color, theorem.statement);
   var coord = db.drawInfoText(canvas, "Statement to prove:", theorem.statement, space);
   //db.newColumn(coord, db.infoTextTop);
-  coord = db.drawInfoText(canvas, "We assume:", newStas, space, coord);
+  coord = db.drawInfoTextWithColors(canvas, "We assume:", newStas, space, coord);
   //db.newColumn(coord, db.infoTextTop);
   coord = db.drawInfoText(canvas, "We want to show:", goals, space, coord);
 }

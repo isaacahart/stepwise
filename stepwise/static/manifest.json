@@ -3,8 +3,8 @@
     "file": "assets/drawing_base-CWeLFORY.js",
     "name": "drawing_base"
   },
-  "_make_statement_ui-DZ2I9uWW.js": {
-    "file": "assets/make_statement_ui-DZ2I9uWW.js",
+  "_make_statement_ui-O-D1AYOD.js": {
+    "file": "assets/make_statement_ui-O-D1AYOD.js",
     "name": "make_statement_ui",
     "imports": [
       "_drawing_base-CWeLFORY.js"
@@ -17,7 +17,7 @@
     "isEntry": true,
     "imports": [
       "_drawing_base-CWeLFORY.js",
-      "_make_statement_ui-DZ2I9uWW.js"
+      "_make_statement_ui-O-D1AYOD.js"
     ]
   },
   "front-end/js/ui/play_level.js": {
@@ -27,7 +27,7 @@
     "isEntry": true,
     "imports": [
       "_drawing_base-CWeLFORY.js",
-      "_make_statement_ui-DZ2I9uWW.js"
+      "_make_statement_ui-O-D1AYOD.js"
     ]
   },
   "front-end/js/ui/world_map.js": {

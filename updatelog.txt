@@ -1,3 +1,6 @@
+1.2.2. 10/4/2026
+Assumptions are now colored green when hovering proof header
+Renamed deleted block to undefined block
 1.2.1. 10/3/2026
 Fixed rounding issues introduced by touch controls that prevented level positions from being saved
 1.2.0. 10/3/2026

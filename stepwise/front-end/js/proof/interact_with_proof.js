@@ -78,7 +78,7 @@ function blocksUntilCloseC(proof, step) {
 }
 
 export function drawProofHoveredInfo(canvas, proof, space, x, y) {
-  if (x < 0 || x > 500) {
+  if (x < 0) {
     return drawHoveredInformation(canvas, {type: "none"}, space);
   }
   if (y < db.proofHeaderSize) {

@@ -223,7 +223,7 @@ function findContradictionData(block, space) {
 
 function deletedBlockData() {
   return {
-    name: "[deleted block]",
+    name: "[undefined block]",
     color: "#000000",
     inputIds: [],
     outputObjs: [],
