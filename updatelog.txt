@@ -1,3 +1,8 @@
+1.2.3. 10/6/2026
+When a block produces a for all statement as its first statement (that is, when not all inputs have been filled),
+    objects are now labeled "input1", "input2", etc in order to make it easier to tell which objects should be put in which inputs.
+Output objects that have not yet been named are now labeled "output1", "output2", etc instead of taking the name defined in the theorem.
+Output blocks that have not yet been named are now labeled based on their statement.
 1.2.2. 10/4/2026
 Assumptions are now colored green when hovering proof header
 Renamed deleted block to undefined block

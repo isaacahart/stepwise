@@ -4,7 +4,7 @@ import { assignToStatementTypes, statementTypes } from "./statement_base.js";
 
 const indentChar = "|  ";
 
-export function makeStatementString(sta, objects, vars={}, varIdx=0, indent="", oneLine=false, schemaStas=[]) {
+export function makeStatementString(sta, objects, vars={}, varIdx=0, indent="", oneLine=false, schemaStas=[], outerInputNums=[]) {
   // return a list representing one or more lines of text in a string representation of the given statement
   var f = assignToStatementTypes(sta.type, [
     statementStringSimple,
@@ -19,18 +19,18 @@ export function makeStatementString(sta, objects, vars={}, varIdx=0, indent="", 
     statementStringStatementApp
   ]);
   if (oneLine) {
-    var lst = f(sta, objects, vars, varIdx, " ", oneLine, schemaStas);
+    var lst = f(sta, objects, vars, varIdx, " ", oneLine, schemaStas, outerInputNums);
     var out = ""
     for (var i = 0; i < lst.length; i++) {
       out += lst[i];
     }
     return out;
   } else {
-    return f(sta, objects, vars, varIdx, indent, oneLine, schemaStas);
+    return f(sta, objects, vars, varIdx, indent, oneLine, schemaStas, outerInputNums);
   }
 }
 
-function statementStringSimple(sta, objects, vars, varIdx, indent, oneLine, schemaStas) {
+function statementStringSimple(sta, objects, vars, varIdx, indent) {
   var objNames = []
   for (var i = 0; i < sta.objects.length; i++) {
     var obj = sta.objects[i];
@@ -61,7 +61,7 @@ function statementStringSimple(sta, objects, vars, varIdx, indent, oneLine, sche
 
 function statementStringNot(sta, objects, vars, varIdx, indent, oneLine, schemaStas) {
   var lines = [indent + "not:"];
-  lines.push(...makeStatementString(sta.statement, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.statement, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas, []));
   return lines;
 }
 
@@ -71,36 +71,43 @@ function statementStringAndOr(sta, objects, vars, varIdx, indent, oneLine, schem
     if (i > 0) {
       lines.push(indent + sta.type);
     }
-    lines.push(...makeStatementString(sta.statements[i], objects, vars, varIdx, indent + indentChar, oneLine, schemaStas));
+    lines.push(...makeStatementString(sta.statements[i], objects, vars, varIdx, indent + indentChar, oneLine, schemaStas, []));
   }
   return lines;
 }
 
 function statementStringIf(sta, objects, vars, varIdx, indent, oneLine, schemaStas) {
   var lines = [indent + "if:"];
-  lines.push(...makeStatementString(sta.first, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.first, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas, []));
   lines.push(indent + "then:");
-  lines.push(...makeStatementString(sta.second, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.second, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas, []));
   return lines;
 }
 
 function statementStringIff(sta, objects, vars, varIdx, indent, oneLine, schemaStas) {
   var lines = [];
-  lines.push(...makeStatementString(sta.first, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.first, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas, []));
   lines.push(indent + "if and only if");
-  lines.push(...makeStatementString(sta.second, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.second, objects, vars, varIdx, indent + indentChar, oneLine, schemaStas, []));
   return lines;
 }
 
-function statementStringForAll(sta, objects, vars, varIdx, indent, oneLine, schemaStas) {
-  var lines = [indent + "for all " + sta.varName + ":"];
+function statementStringForAll(sta, objects, vars, varIdx, indent, oneLine, schemaStas, outerInputNums) {
+  if (outerInputNums.length > 0) {
+    var varName = "input" + outerInputNums[0].toString();
+    var newOuterInputNums = outerInputNums.slice(1, outerInputNums.length);
+  } else {
+    var varName = sta.varName;
+    var newOuterInputNums = [];
+  }
+  var lines = [indent + "for all " + varName + ":"];
   var newVars = {...vars};
   if ("varIdx" in sta) {
-    newVars[sta.varIdx] = sta.varName;
+    newVars[sta.varIdx] = varName;
   } else {
-    newVars[varIdx] = sta.varName;
+    newVars[varIdx] = varName;
   }
-  lines.push(...makeStatementString(sta.statement, objects, newVars, varIdx+1, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.statement, objects, newVars, varIdx+1, indent + indentChar, oneLine, schemaStas, newOuterInputNums));
   return lines;
 }
 
@@ -112,13 +119,13 @@ function statementStringExists(sta, objects, vars, varIdx, indent, oneLine, sche
   } else {
     newVars[varIdx] = sta.varName;
   }
-  lines.push(...makeStatementString(sta.statement, objects, newVars, varIdx+1, indent + indentChar, oneLine, schemaStas));
+  lines.push(...makeStatementString(sta.statement, objects, newVars, varIdx+1, indent + indentChar, oneLine, schemaStas, []));
   return lines;
 }
 
 function statementStringAxiomSchema(sta, objects, vars, varIdx, indent, oneLine, schemaStas) {
   var lines = [indent + "given any statement " + sta.staName + " with " + sta.freeVars + " free variables:"];
-  lines.push(...makeStatementString(sta.statement, objects, vars, varIdx, indent + indentChar, oneLine, [...schemaStas, sta.staName]));
+  lines.push(...makeStatementString(sta.statement, objects, vars, varIdx, indent + indentChar, oneLine, [...schemaStas, sta.staName], []));
   return lines;
 }
 
@@ -153,6 +160,19 @@ export function makeStatementListStrings(stas, objects) {
   var out = [];
   for (var i = 0; i < stas.length; i++) {
     out.push(...makeStatementString(stas[i], objects));
+    out.push("");
+  }
+  return out;
+}
+
+export function makeStatementListStringsWithOuterInputs(stas, objects, outerInputNums) {
+  var out = [];
+  for (var i = 0; i < stas.length; i++) {
+    if (i == 0) {
+      out.push(...makeStatementString(stas[i], objects, {}, 0, "", false, [], outerInputNums));
+    } else {
+      out.push(...makeStatementString(stas[i], objects));
+    }
     out.push("");
   }
   return out;

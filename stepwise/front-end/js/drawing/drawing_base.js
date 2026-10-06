@@ -1,4 +1,4 @@
-import { colorStatementListStrings, makeStatementListStrings } from "../statement/statement_display";
+import { colorStatementListStrings, makeStatementListStrings, makeStatementListStringsWithOuterInputs } from "../statement/statement_display";
 
 export const textSize = 14;
 export const textFont = "14px Arial";
@@ -143,16 +143,16 @@ export function drawInfoText(canvas, header, statements, space, coord=null) {
   return drawTextLinesWithLooping(canvas.getContext("2d"), lines, coord, canvas.height);
 }
 
-export function drawInfoTextWithColors(canvas, header, statements, space, coord=null) {
+export function drawInfoTextWithColors(canvas, header, statements, space, coord=null, firstStaOpenInputNums=[]) {
   if (coord == null) {
     coord = {x: 5, y: infoTextTop};
   }
 
   if (header == "") {
-    var lines = makeStatementListStrings(statements, space.objects);
+    var lines = makeStatementListStringsWithOuterInputs(statements, space.objects, firstStaOpenInputNums);
     var colors = colorStatementListStrings(statements, space);
   } else {
-    var lines = [header, ...makeStatementListStrings(statements, space.objects)];
+    var lines = [header, ...makeStatementListStringsWithOuterInputs(statements, space.objects, firstStaOpenInputNums)];
     var colors = ["black", ...colorStatementListStrings(statements, space)];
   }
 

@@ -69,8 +69,18 @@ function drawTheoremBlockInformation(canvas, block, newStas, space, inList) {
   }
 
   if (newStas !== undefined) {
-    db.drawInfoTextWithColors(canvas, "We now know:", newStas, space);
+    db.drawInfoTextWithColors(canvas, "We now know:", newStas, space, null, countEmptyTheoremInputs(block));
   }
+}
+
+function countEmptyTheoremInputs(block) {
+  var out = [];
+  for (var i = 0; i < block.inputs.length; i++) {
+    if (block.inputs[i] == -1) {
+      out.push(i+1);
+    }
+  }
+  return out;
 }
 
 function drawTautologyBlockInformation(canvas, block, newStas, space, inList) {

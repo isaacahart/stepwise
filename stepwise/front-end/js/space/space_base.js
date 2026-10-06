@@ -24,6 +24,7 @@ import { applyModusPonensWithMinimalLogic, impliesWithMinimalLogic } from "../st
 import { assignObjectToQuantifier } from "../theorem/assign_objects.js";
 import { defaultBlockColor, defaultBlockName, makeForAllBlock } from "../block/block_base.js";
 import { emptyInputObj, emptyOutputObj, makeObject } from "../object/object_base.js";
+import { makeStatementStringOneLine } from "../statement/statement_display.js";
 
 export function emptySpace() {
   return {objects: [], statements: [], theoremList: [], theoremIds: [], createdBlocks: [], 
@@ -62,27 +63,28 @@ export function statementExactlyInSpace(sta, space) {
   return space.statements.includes(sta);
 }
 
-export function addStatementToSpace(sta, space, newObjs=[], newBlocks=[]) {
+export function addStatementToSpace(sta, space, newObjs=[], newBlocks=[], newUnnamedObjCount=0) {
   var outs = emptyOutput();
 
   if (sta.type === "and") {
-    incrementOutputs(outs, addStatementsToSpace(sta.statements, space, newObjs, newBlocks));
+    incrementOutputs(outs, addStatementsToSpace(sta.statements, space, newObjs, newBlocks, newUnnamedObjCount));
 
   } else if (sta.type === "exists") {
       var obj = newObjs.shift();
       if (obj === undefined) {
-        space.objects.push(makeObject(sta.varName, sta.varColor));
+        newUnnamedObjCount += 1;
+        space.objects.push(makeObject("output"+newUnnamedObjCount.toString(), sta.varColor));
       } else {
         space.objects.push(obj);
       }
       outs.objs += 1;
-      incrementOutputs(outs, addStatementToSpace(assignObjectToQuantifier(sta, space.objects.length-1), space, newObjs, newBlocks));
+      incrementOutputs(outs, addStatementToSpace(assignObjectToQuantifier(sta, space.objects.length-1), space, newObjs, newBlocks, newUnnamedObjCount));
 
   } else if (!statementExactlyInSpace(sta, space)) {
     if (sta.type === "for-all") {
       var blk = newBlocks.shift();
       if (blk === undefined) {
-        space.createdBlocks.push({name: defaultBlockName, color: defaultBlockColor, statement: space.statements.length});
+        space.createdBlocks.push({name: makeStatementStringOneLine(sta, space.objects), color: defaultBlockColor, statement: space.statements.length});
       } else {
         space.createdBlocks.push({name: blk.name, color: blk.color, statement: space.statements.length});
       }
@@ -95,10 +97,10 @@ export function addStatementToSpace(sta, space, newObjs=[], newBlocks=[]) {
   return outs;
 }
 
-export function addStatementsToSpace(stas, space, newObjs=[], newBlocks=[]) {
+export function addStatementsToSpace(stas, space, newObjs=[], newBlocks=[], newUnnamedObjCount=0) {
   var outs = emptyOutput();
   for (var i = 0; i < stas.length; i++) {
-    incrementOutputs(outs, addStatementToSpace(stas[i], space, newObjs, newBlocks));
+    incrementOutputs(outs, addStatementToSpace(stas[i], space, newObjs, newBlocks, newUnnamedObjCount));
   }
   return outs;
 }
