@@ -31,4 +31,6 @@ urlpatterns = [
     path("projects/mostliked", views.MostLikedProjects.as_view(), name="mostlikedprojects"),
     path("reportbugs", views.ReportBugsView.as_view(), name="reportbugs"),
     path("suggest", views.MakeSuggestionView.as_view(), name="suggest"),
+    path("projects/<int:pk>/solution", views.UniverseSolution.as_view(), name="universesolution"),
+    path("projects/<int:unvid>/level/<int:pk>/solution", views.LevelSolution.as_view(), name="levelsolution"),
 ]

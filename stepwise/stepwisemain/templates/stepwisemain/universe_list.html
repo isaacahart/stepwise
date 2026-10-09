@@ -25,6 +25,7 @@
             {% if user == unv.owner %}
                 <a class="button" href="{% url 'stepwisemain:edituniverse' unv.pk %}">Edit</a>
             {% endif %}
+            <a class="button" href="{% url 'stepwisemain:universesolution' unv.pk %}">View Solutions</a>
             by <a href="{% url 'stepwisemain:profile' unv.owner.pk %}">{{ unv.owner.username }}</a>
             - {{ unv.level_set.all|length }} levels
             - {{ unv.plays }} plays

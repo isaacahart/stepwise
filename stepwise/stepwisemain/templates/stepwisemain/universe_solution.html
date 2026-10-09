@@ -1,0 +1,30 @@
+{% extends 'stepwisemain/base.html' %}
+
+{% load django_vite %}
+
+{% block title %}Stepwise - Play {{ universe.name }}{% endblock %}
+
+{% block content %}
+<h1 style="position: relative; z-index: 5;">{{ universe.name }}</h1>
+
+<canvas class="map" style="position: fixed; top:0px; left:0px;"></canvas>
+
+<div class="nodes">
+    {% for level in universe.level_set.all %}
+        <input type="hidden"
+            value="{{ level.coord }}"
+            name="level{{ level.pk }}"
+            data-id="{{ level.pk }}"
+            data-name="{{ level.name }}"
+            data-color="{{ level.color }}"
+            data-complete="{% if level.pk in levels_complete %}true{% elif level.pk in unlocked %}unlocked{% else %}false{% endif %}"
+            data-link="{% url 'stepwisemain:levelsolution' universe.pk level.pk %}">
+    {% endfor %}
+</div>
+
+<input type="hidden" name="edges" value="{{ universe.edges }}">
+
+<a class="button" href="{% url 'stepwisemain:index' %}" style="position: fixed; top:5px; right:5px; z-index: 5;">Back</a>
+
+{% vite_asset 'front-end/js/ui/world_map.js' %}
+{% endblock %}

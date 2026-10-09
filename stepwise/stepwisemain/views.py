@@ -412,6 +412,37 @@ class PlayLevelSignedOut(generic.TemplateView):
     def get_success_url(self):
         return reverse("stepwisemain:playsignedout", kwargs={'pk': self.kwargs["pk"]})
 
+class UniverseSolution(generic.TemplateView):
+    template_name = "stepwisemain/universe_solution.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["universe"] = Universe.objects.get(pk=kwargs["pk"])
+        context["levels_complete"] = context["universe"].level_set.values_list("pk", flat=True)
+        context["unlocked"] = context["levels_complete"]
+        return context
+
+class LevelSolution(generic.TemplateView):
+    template_name = "stepwisemain/play_level.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["unvid"] = kwargs["unvid"]
+        lvl = Level.objects.get(pk=self.kwargs["pk"])
+        context["proof_steps"] = json.dumps(lvl.proof_steps)
+        context["theorem_statement"] = json.dumps(lvl.theorem.statement)
+        context["level"] = lvl
+        context["help_text"] = lvl.help_text.splitlines()
+        context["unlocked_thms"] = lvl.get_unlocked_theorems()
+        context["new_special_blocks"] = json.dumps(lvl.get_unlocked_special_blocks())
+        return context
+
+    def post(self, request, *args, **kwargs):
+        return redirect("stepwisemain:universesolution", pk=kwargs["unvid"])
+    
+    def get_success_url(self):
+        return reverse("stepwisemain:universesolution", kwargs={'pk': self.kwargs["unvid"]})
+
 class UserUniverses(generic.ListView):
     model = Universe
     template_name = "stepwisemain/user_universe_list.html"
