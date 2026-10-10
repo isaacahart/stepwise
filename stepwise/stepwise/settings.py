@@ -41,6 +41,7 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
 INSTALLED_APPS = [
     'django_vite',
+    'model_clone',
     "stepwisemain.apps.StepwisemainConfig",
     "accounts.apps.AccountsConfig",
     'django.contrib.admin',

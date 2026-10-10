@@ -443,6 +443,20 @@ class LevelSolution(generic.TemplateView):
     def get_success_url(self):
         return reverse("stepwisemain:universesolution", kwargs={'pk': self.kwargs["unvid"]})
 
+def clone_universe(request, pk):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+    
+    originalUniverse = Universe.objects.get(pk=pk)
+    clonedUniverse = originalUniverse.make_clone(attrs={"owner":request.user, "update_date":timezone.now()})
+    clonedUniverse.fix_edges_on_clone(originalUniverse.level_set)
+    clonedUniverse.copy_of.add(originalUniverse)
+    for copiedUnv in originalUniverse.copy_of.all():
+        clonedUniverse.copy_of.add(copiedUnv)
+    clonedUniverse.save()
+
+    return redirect("stepwisemain:edituniverse", pk=clonedUniverse.pk)
+
 class UserUniverses(generic.ListView):
     model = Universe
     template_name = "stepwisemain/user_universe_list.html"

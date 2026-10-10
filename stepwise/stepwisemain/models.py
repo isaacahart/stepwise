@@ -3,8 +3,9 @@ from django.conf import settings
 import json
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+from model_clone import CloneMixin
 
-class Universe(models.Model):
+class Universe(CloneMixin, models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, blank=True)
     update_date = models.DateTimeField(null=True)
@@ -14,6 +15,11 @@ class Universe(models.Model):
     plays = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     liked_by = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="likedby", blank=True)
+    copy_of = models.ManyToManyField("self", symmetrical=False, related_name="copiedby", blank=True)
+
+    _clone_fields = ["name", "edges"]
+    _clone_excluded_m2o_or_o2m_fields = ["owner", "gamestate_set"]
+    _clone_excluded_m2m_fields = ["liked_by", "copy_of"]
 
     def __str__(self):
         return self.name
@@ -75,6 +81,12 @@ class Universe(models.Model):
             else:
                 idx += 1
 
+    def fix_edges_on_clone(self, oldLevels):
+        for edge in self.edges:
+            name = oldLevels.get(pk=edge["from"]).name
+            edge["from"] = self.level_set.get(name=name).pk
+            name = oldLevels.get(pk=edge["to"]).name
+            edge["to"] = self.level_set.get(name=name).pk
 
 
 class GameState(models.Model):
@@ -86,7 +98,7 @@ class GameState(models.Model):
 def default_coord():
     return "{\"x\":100,\"y\":100}"
 
-class Level(models.Model):
+class Level(CloneMixin, models.Model):
     name = models.CharField(max_length=100)
     color = models.CharField(max_length=7, default="#000000")
     help_text = models.TextField(max_length=2000, default="", blank=True)
@@ -95,6 +107,8 @@ class Level(models.Model):
     proof_steps = models.JSONField(default=list, blank=True)
     coord = models.JSONField(default=default_coord)
     new_special_blocks = models.JSONField(default=list, blank=True)
+    _clone_o2o_fields = ["theorem"]
+    _clone_m2o_or_o2m_fields = ["axiom_set"]
 
     def __str__(self):
         return self.name
@@ -124,7 +138,6 @@ def sort_theorems_by_category(thms):
 
 @receiver(post_delete, sender=Level)
 def level_deleted_handler(sender, instance, **kwargs):
-    print(instance.universe, instance.pk)
     instance.universe.delete_edges_on_level_delete(instance.pk)
 
 def default_statement():
@@ -142,10 +155,10 @@ class Proposition(models.Model):
     def get_statement(self):
         return json.dumps(self.statement)
     
-class Theorem(Proposition):
+class Theorem(CloneMixin, Proposition):
     level = models.OneToOneField(Level, on_delete=models.CASCADE)
 
-class Axiom(Proposition):
+class Axiom(CloneMixin, Proposition):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
 
 class BugReport(models.Model):

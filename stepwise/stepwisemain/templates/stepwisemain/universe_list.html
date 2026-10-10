@@ -20,12 +20,19 @@
     <fieldset>
         <h2>{{ unv.name }}</h2>
         <p>{{ unv.description }}</p>
+        {% for copiedunv in unv.copy_of.all %}
+            <p>Copied from {{ copiedunv.name }} 
+                by <a href="{% url 'stepwisemain:useruniverses' copiedunv.owner.pk %}">{{ copiedunv.owner.username }}</a></p>
+        {% endfor %}
         <p>
             <a class="button" href="{% url 'stepwisemain:newgame' unv.pk %}">Play</a>
             {% if user == unv.owner %}
                 <a class="button" href="{% url 'stepwisemain:edituniverse' unv.pk %}">Edit</a>
             {% endif %}
             <a class="button" href="{% url 'stepwisemain:universesolution' unv.pk %}">View Solutions</a>
+            {% if user.is_authenticated %}
+                <a class="button" href="{% url 'stepwisemain:cloneuniverse' unv.pk %}">Make a Copy</a>
+            {% endif %}
             by <a href="{% url 'stepwisemain:profile' unv.owner.pk %}">{{ unv.owner.username }}</a>
             - {{ unv.level_set.all|length }} levels
             - {{ unv.plays }} plays
@@ -41,18 +48,15 @@
   <div class="pagination">
     <span class="step-links">
       
-      <!-- Previous Page Links -->
       {% if page_obj.has_previous %}
         <a href="?page=1">First</a>
         <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
       {% endif %}
 
-      <!-- Current Page Indicator -->
       <span class="current">
         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
       </span>
 
-      <!-- Next Page Links -->
       {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}">Next</a>
         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>

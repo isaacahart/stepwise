@@ -33,4 +33,5 @@ urlpatterns = [
     path("suggest", views.MakeSuggestionView.as_view(), name="suggest"),
     path("projects/<int:pk>/solution", views.UniverseSolution.as_view(), name="universesolution"),
     path("projects/<int:unvid>/level/<int:pk>/solution", views.LevelSolution.as_view(), name="levelsolution"),
+    path("projects/<int:pk>/copy", views.clone_universe, name="cloneuniverse"),
 ]
