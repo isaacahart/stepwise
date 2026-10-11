@@ -5,7 +5,11 @@
 {% block title %}Stepwise - Play {{ universe.name }}{% endblock %}
 
 {% block content %}
-<h1 style="position: relative; z-index: 5;">{{ universe.name }}</h1>
+<h1 style="position: relative; z-index: 5;">{{ universe.name }} by <a href="{% url 'stepwisemain:profile' universe.owner.pk %}">{{ universe.owner.username }}</a></h1>
+{% for copiedunv in universe.copy_of.all %}
+    <p style="position: relative; z-index: 5;">Copied from {{ copiedunv.name }} 
+        by <a href="{% url 'stepwisemain:useruniverses' copiedunv.owner.pk %}">{{ copiedunv.owner.username }}</a></p>
+{% endfor %}
 
 <canvas class="map" style="position: fixed; top:0px; left:0px;"></canvas>
 
