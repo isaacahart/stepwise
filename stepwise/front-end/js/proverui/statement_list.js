@@ -49,7 +49,7 @@ export function mouseDownOnStatementList(space, proof, mousex, mousey) {
   for (var i = 0; i < lines1.length; i++) {
     if (lines1[i] === "") {
       if (mousey > starty && mousey < y && idx < proof.goals.length) {
-        return {type:"statement", statement:proof.goals[idx]};
+        return {type:"statement", statement:structuredClone(proof.goals[idx])};
       }
       idx ++;
       starty = y;
@@ -68,7 +68,7 @@ export function mouseDownOnStatementList(space, proof, mousex, mousey) {
   for (var i = 0; i < lines2.length; i++) {
     if (lines2[i] === "") {
       if (mousey > starty && mousey < y && idx < sortedStas.length) {
-        return {type:"statement", statement:sortedStas[idx]};
+        return {type:"statement", statement:structuredClone(sortedStas[idx])};
       }
       idx ++;
       starty = y;

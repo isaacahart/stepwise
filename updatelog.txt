@@ -1,3 +1,5 @@
+1.4.2. 10/11/2026
+Fixed bug where dragging a statement into the block that created it would crash the prover
 1.4.1. 10/11/2026
 Fixed bug that prevented users from creating accounts
 Added link to project creator in the solutions page
